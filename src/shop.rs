@@ -1,5 +1,5 @@
 use std::fmt;
-
+use std::cmp::Ordering;
 use crate::{card::Card, FightResult};
 
 pub struct Shop {
@@ -26,7 +26,28 @@ impl Shop {
     /// this store wins, FightResult::Loss if this store loses, and a
     /// FightResult::Tie if both stores win the same number of battles.
     pub fn fight_store(&self, other: &Shop) -> FightResult {
-        todo!()
+        //tried using iterators originally, did not work for some reason
+        let mut our_wins: u32 = 0;
+        let mut other_wins: u32 = 0;
+
+        for o_card in &self.cards {
+            for t_card in &other.cards { 
+                let result: FightResult = o_card.fight(t_card);
+        
+                match result {
+                    FightResult::Win => our_wins += 1,
+                    FightResult::Loss => other_wins += 1,
+                    FightResult::Tie => (),
+                    FightResult::Draw => (), 
+                }
+            } 
+        }
+
+        match our_wins.cmp(&other_wins) {
+            Ordering::Less => FightResult::Loss,
+            Ordering::Greater => FightResult::Win,
+            Ordering::Equal => FightResult::Tie,
+        }
     }
 }
 
