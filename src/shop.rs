@@ -1,6 +1,6 @@
-use std::fmt;
-use std::cmp::Ordering;
 use crate::{card::Card, FightResult};
+use std::cmp::Ordering;
+use std::fmt;
 
 pub struct Shop {
     pub cards: Vec<Card>,
@@ -31,16 +31,16 @@ impl Shop {
         let mut other_wins: u32 = 0;
 
         for o_card in &self.cards {
-            for t_card in &other.cards { 
+            for t_card in &other.cards {
                 let result: FightResult = o_card.fight(t_card);
-        
+
                 match result {
                     FightResult::Win => our_wins += 1,
                     FightResult::Loss => other_wins += 1,
                     FightResult::Tie => (),
-                    FightResult::Draw => (), 
+                    FightResult::Draw => (),
                 }
-            } 
+            }
         }
 
         match our_wins.cmp(&other_wins) {

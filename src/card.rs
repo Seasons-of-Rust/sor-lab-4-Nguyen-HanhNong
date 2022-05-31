@@ -11,7 +11,8 @@ pub struct Card {
 
 impl Card {
     pub fn fight(&self, other: &Card) -> FightResult {
-        let net_effect: (bool, bool) = ((self.damage >= other.health), (other.damage >= self.health));
+        let net_effect: (bool, bool) =
+            ((self.damage >= other.health), (other.damage >= self.health));
         match net_effect {
             (true, true) => FightResult::Tie,
             (true, false) => FightResult::Win,
